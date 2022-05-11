@@ -8,19 +8,16 @@ public class ULA {
 	private ArrayList<String> binInstructions;
 	private RegistradorGeral T;
 	private Acumulador A;
-        private String r1;
-        private String r2;
+	private PalavraStatus SW;
 	
 	public ULA() {
 		this.binCode = new ArrayList<String>();
 		this.binInstructions = new ArrayList<String>();
 		this.T = new RegistradorGeral();
 		this.A = new Acumulador();
-                this.r1 = new String();
-                this.r2 = new String();
+		this.SW = new PalavraStatus();
                 
-		
-		Ferramentas.abrirArquivoEm(binInstructions, "C:\\Users\\lgaqu\\OneDrive\\Pessoal\\Documentos\\NetBeansProjects\\PS\\arquivos");
+		Ferramentas.abrirArquivoEm(binInstructions, "C:\\Users\\A\\Documents\\instrucoes.txt");
 		binInstructions = Ferramentas.traduzirOp(binInstructions);
 		
 		T.setRegistrador("0", 10);
@@ -32,49 +29,57 @@ public class ULA {
 	}
 	
 	public void stepCode(String key, ArrayList<String> code) {
+		String r1, r2;
 		switch(key) {
 			case "00011000":
 				binCode = Ferramentas.format34(code, ContadorInstrucoes.getContator());
-				String r4 = binCode.get(0);
-				add(r4);
+				r1 = binCode.get(0);
+				add(r1);
 				break;
 				
 			case "10010000":
 				binCode = Ferramentas.format2(code, ContadorInstrucoes.getContator());
-				// = binCode.get(0);
-				
-                                r1 = binCode.get(0);
-                                r2 = binCode.get(1);
+                r1 = binCode.get(0);
+                r2 = binCode.get(1);
 				addr(r1, r2);
 				break;
 				
 			case "01000000":
-                binCode = Ferramentas.format2(code, ContadorInstrucoes.getContator());
-				if(r1>r2){
-					and(r1);
-				}else{}
+				binCode = Ferramentas.format34(code, ContadorInstrucoes.getContator());
+				r1 = binCode.get(0);
+				and(r1);
 				break;
 				
 			case "10110100":
 				binCode = Ferramentas.format2(code, ContadorInstrucoes.getContator());
-				String r3 = binCode.get(0);
-				clear(r3);
+				r1 = binCode.get(0);
+				clear(r1);
 				break;
 				
 			case "00101000":
-				comp();
+				binCode = Ferramentas.format34(code, ContadorInstrucoes.getContator());
+				r1 = binCode.get(0);
+				comp(r1);
 				break;
 				
 			case "10100000":
-				compr();
+				binCode = Ferramentas.format2(code, ContadorInstrucoes.getContator());
+				r1 = binCode.get(0);
+				r2 = binCode.get(1);
+				compr(r1, r2);
 				break;
 				
 			case "00100100":
-				div();
+				binCode = Ferramentas.format34(code, ContadorInstrucoes.getContator());
+				r1 = binCode.get(0);
+				div(r1);
 				break;
 				
 			case "10011100":
-				divr();
+				binCode = Ferramentas.format2(code, ContadorInstrucoes.getContator());
+                r1 = binCode.get(0);
+                r2 = binCode.get(1);
+				divr(r1, r2);
 				break;
 				
 			case "00111100":
@@ -99,8 +104,8 @@ public class ULA {
 				
 			case "00000000":
 				binCode = Ferramentas.format34(code, ContadorInstrucoes.getContator());
-				String r6 = binCode.get(0);
-				lda(r6);
+				r1 = binCode.get(0);
+				lda(r1);
 				break;
 
 			case "01101000":
@@ -129,20 +134,28 @@ public class ULA {
 				
 			case "00100000":
 				binCode = Ferramentas.format34(code, ContadorInstrucoes.getContator());
-				String r8 = binCode.get(0);
-				mul(r8);
+				r1 = binCode.get(0);
+				mul(r1);
 				break;
 				
 			case "10011000":
-				mulr();
+				binCode = Ferramentas.format2(code, ContadorInstrucoes.getContator());
+                r1 = binCode.get(0);
+                r2 = binCode.get(1);
+				mulr(r1, r2);
 				break;
 				
 			case "01000100":
-				or();
+				binCode = Ferramentas.format34(code, ContadorInstrucoes.getContator());
+				r1 = binCode.get(0);
+				or(r1);
 				break;
 				
 			case "10101100":
-				rmo();
+				binCode = Ferramentas.format2(code, ContadorInstrucoes.getContator());
+                r1 = binCode.get(0);
+                r2 = binCode.get(1);
+				rmo(r1, r2);
 				break;
 				
 			case "01001100":
@@ -150,23 +163,23 @@ public class ULA {
 				break;
 				
 			case "10100100":
-                                binCode = Ferramentas.format2(code, ContadorInstrucoes.getContator());
-                            	r1 = binCode.get(0);
-                                r2 = binCode.get(1);			
+                binCode = Ferramentas.format2(code, ContadorInstrucoes.getContator());
+                r1 = binCode.get(0);
+                r2 = binCode.get(1);			
 				shiftl(r1,r2);
 				break;
 				
 			case "10101000":
-                                binCode = Ferramentas.format2(code, ContadorInstrucoes.getContator());
-                            	r1 = binCode.get(0);
-                                r2 = binCode.get(1);
+                binCode = Ferramentas.format2(code, ContadorInstrucoes.getContator());
+                r1 = binCode.get(0);
+                r2 = binCode.get(1);
 				shiftr(r1,r2);
 				break;
 				
 			case "00001100":
 				binCode = Ferramentas.format34(code, ContadorInstrucoes.getContator());
-				String r5 = binCode.get(0);
-				sta(r5);
+				r1 = binCode.get(0);
+				sta(r1);
 				break;
 				
 			case "01111000":
@@ -195,11 +208,14 @@ public class ULA {
 				
 			case "00011100":
 				binCode = Ferramentas.format34(code, ContadorInstrucoes.getContator());
-				String r7 = binCode.get(0);
-				sub(r7);
+				r1 = binCode.get(0);
+				sub(r1);
 				break;
 				
 			case "10010100":
+				binCode = Ferramentas.format2(code, ContadorInstrucoes.getContator());
+				r1 = binCode.get(0);
+				r2 = binCode.get(1);
 				subr(r1,r2);
 				break;
 				
@@ -213,8 +229,8 @@ public class ULA {
 
 			case "11111111":
 				binCode = Ferramentas.format34(code, ContadorInstrucoes.getContator());
-				String r9 = binCode.get(0);
-				write(r9);
+				r1 = binCode.get(0);
+				write(r1);
 				break;
 		}
 	}
@@ -224,7 +240,7 @@ public class ULA {
 	}
 	
 	public void add(String r1) {	
-                int soma = 0;
+        int soma = 0;
 		soma = A.getAcumulador() + Integer.parseInt(r1);
 		A.setAcumulador(soma);
 	}
@@ -235,25 +251,25 @@ public class ULA {
 		T.setRegistrador(r2, soma);
 	}
 	public void and(String r1) {
-		
+		A.setAcumulador(A.getAcumulador() & Integer.parseInt(r1));
 	}
 	public void clear(String r1) {
-            int zero = 0;
+        int zero = 0;
 		T.setRegistrador(r1, zero);
 	}
-	public void comp() {
-	
+	public void comp(String r1) { // 0 se forem iguais, -1 se o primeiro for maior, 1 se o segundo for maior
+		SW.setValorCondicao(Integer.compare(A.getAcumulador(), Integer.parseInt(r1)));
 	}
-	public void compr() {
-	
+	public void compr(String r1, String r2) {
+		SW.setValorCondicao(Integer.compare(T.getValorDoRegistrador(r1), T.getValorDoRegistrador(r2)));
 	}
-	public void div() {
-	
+	public void div(String r1) {
+		A.setAcumulador(A.getAcumulador() / Integer.parseInt(r1));
 	}
 	public void divr(String r1,String r2) {
-            int divisao = 0;
-            divisao = T.getValorDoRegistrador(r1) / T.getValorDoRegistrador(r2);
-            T.setRegistrador(r2, divisao);
+		int divisao = 0;
+        divisao = T.getValorDoRegistrador(r1) / T.getValorDoRegistrador(r2);
+        T.setRegistrador(r2, divisao);
 	}
 	public void j() {
 	
@@ -271,7 +287,7 @@ public class ULA {
 	
 	}
 	public void lda(String r1) {
-            A.setAcumulador(Integer.parseInt(r1));
+		A.setAcumulador(Integer.parseInt(r1));
 	}
 	public void ldb() {
 	
@@ -297,31 +313,29 @@ public class ULA {
 		A.setAcumulador(multiplicacao);
 	}
 	public void mulr(String r1, String r2) {
-            int multiplicacao = 0;
-            multiplicacao = T.getValorDoRegistrador(r1) * T.getValorDoRegistrador(r2);
-            T.setRegistrador(r2, multiplicacao);
+        int multiplicacao = 0;
+        multiplicacao = T.getValorDoRegistrador(r1) * T.getValorDoRegistrador(r2);
+        T.setRegistrador(r2, multiplicacao);
 	}
-	public void or() {
-	
+	public void or(String r1) {
+		A.setAcumulador(A.getAcumulador() | Integer.parseInt(r1));
 	}
 	public void rmo(String r1, String r2) {
-            T.setRegistrador(r2,T.getValorDoRegistrador(r1));
+        T.setRegistrador(r2,T.getValorDoRegistrador(r1));
 	}
 	public void rsub() {
 	
 	}
 	public void shiftl(String r1, String r2) {
-            int deslocamento = T.getValorDoRegistrador(r2); 
-            T.setRegistrador(r1, T.getValorDoRegistrador(r1) << deslocamento);
-            
+		int deslocamento = T.getValorDoRegistrador(r2); 
+		T.setRegistrador(r1, T.getValorDoRegistrador(r1) << deslocamento);   
 	}
 	public void shiftr(String r1, String r2) {
-            int deslocamento = T.getValorDoRegistrador(r2); 
-            T.setRegistrador(r1, T.getValorDoRegistrador(r1) >> deslocamento);
-            
+		int deslocamento = T.getValorDoRegistrador(r2); 
+		T.setRegistrador(r1, T.getValorDoRegistrador(r1) >> deslocamento);  
 	}
-	public void sta() {
-			T.setRegistrador(r1, A.getAcumulador());
+	public void sta(String r1) {
+		T.setRegistrador(r1, A.getAcumulador());
 	}
 	public void stb() {
 	
@@ -342,14 +356,14 @@ public class ULA {
 	
 	}
 	public void sub(String r1) {
-                int subtracao = 0;
+        int subtracao = 0;
 		subtracao = A.getAcumulador() - Integer.parseInt(r1);
 		A.setAcumulador(subtracao);
 	}
 	public void subr(String r1, String r2) {
-            int subtracao = 0;
-            subtracao = T.getValorDoRegistrador(r2) - T.getValorDoRegistrador(r1);
-            T.setRegistrador(r2, subtracao);
+        int subtracao = 0;
+        subtracao = T.getValorDoRegistrador(r2) - T.getValorDoRegistrador(r1);
+        T.setRegistrador(r2, subtracao);
 	}
 	public void tix() {
 	
