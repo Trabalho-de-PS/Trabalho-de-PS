@@ -15,4 +15,8 @@ public class ContadorInstrucoes {
 	public static int getContator() {
 		return contador;
 	}
+	
+	public static void setContador(int valor) {
+        	contador = valor;
+    	}
 }
