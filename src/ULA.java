@@ -328,7 +328,8 @@ public class ULA {
 	}
 
 	public void jsub(String r1) {
-
+                L.setRegistrador(); // valor PC??
+                ContadorInstrucoes.setContador(T.getValorDoRegistrador(r1));
 	}
 
 	public void lda(String r1) {
@@ -352,7 +353,7 @@ public class ULA {
 	}
 
 	public void ldt() {
-
+                T.setRegostradpr(Integer.parseInt(r1));
 	}
 
 	public void ldx(String r1) {
@@ -380,7 +381,8 @@ public class ULA {
 	}
 
 	public void rsub() {
-
+		L.setRegistrador(Integer.parseInt(r1));
+                ContadorInstrucoes.setContador(T.getValorDoRegistrador(r1));
 	}
 
 	public void shiftl(String r1, String r2) {
@@ -398,11 +400,11 @@ public class ULA {
 	}
 
 	public void stb() {
-
+               	T.setRegistrador(r1,B.getAcumulador());
 	}
 
 	public void stch() {
-
+                T.setRegistrador(r1, A.getAcumulador()&0xFF);
 	}
 
 	public void stl() {
@@ -434,11 +436,12 @@ public class ULA {
 	}
 
 	public void tix() {
-
+               ContadorInstrucoes.setContador(X.getValorDoRegistrador(r1) + 1);
+               // função compara?
 	}
 
 	public void tixr() {
-
+               ContadorInstrucoes.setContador(X.getValorDoRegistrador(r1) + 1);
 	}
 
 	public void write(String r1) {
