@@ -350,12 +350,14 @@ public class ULA {
 		B.setConteudo(Integer.parseInt(r1));
 	}
 
-	public void ldch() { // A [byte mais a direita] <-- (m)
-
+	public void ldch(String r1) { // A [byte mais a direita] <-- (m)
+                A.setConteudo(A.getConteudo()&0xFF);
 	}
 
 	public void ldl(String r1) { // L <-- (m..m+2)
-		L.setConteudo(Integer.parseInt(r1));
+
+
+
 	}
 
 	public void lds(String r1) { // S <-- (m..m+2)
@@ -417,7 +419,9 @@ public class ULA {
 		T.setRegistrador(r1, A.getConteudo());
 	}
 
-	public void stl() { // m..m+2 <-- (L)
+	public void stl(String r1) { // m..m+2 <-- (L)
+
+
 
 	}
 
