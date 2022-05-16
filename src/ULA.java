@@ -226,19 +226,27 @@ public class ULA {
 				break;
 
 			case "00010100":
-				stl();
+				binCode = Ferramentas.format34(code, ContadorInstrucoes.getContador());
+                		r1 = binCode.get(0);
+                		stl(r1);
 				break;
 
 			case "01111100":
-				sts();
+				binCode = Ferramentas.format34(code, ContadorInstrucoes.getContador());
+                		r1 = binCode.get(0);
+                		sts(r1);
 				break;
 
 			case "10000100":
-				stt();
+				binCode = Ferramentas.format34(code, ContadorInstrucoes.getContador());
+                		r1 = binCode.get(0);
+                		stt(r1);
 				break;
 
 			case "00010000":
-				stx();
+				binCode = Ferramentas.format34(code, ContadorInstrucoes.getContador());
+                		r1 = binCode.get(0);
+                		stx(r1);
 				break;
 
 			case "00011100":
@@ -255,11 +263,15 @@ public class ULA {
 				break;
 
 			case "00101100":
-				tix();
+				binCode = Ferramentas.format34(code, ContadorInstrucoes.getContador());
+                		r1 = binCode.get(0);
+                		tix(r1);
 				break;
 
 			case "10111000":
-				tixr();
+				binCode = Ferramentas.format34(code, ContadorInstrucoes.getContador());
+                		r1 = binCode.get(0);
+                		tixr(r1);
 				break;
 
 			case "11111111":
@@ -355,9 +367,7 @@ public class ULA {
 	}
 
 	public void ldl(String r1) { // L <-- (m..m+2)
-
-
-
+		L.setConteudo(r1);
 	}
 
 	public void lds(String r1) { // S <-- (m..m+2)
@@ -420,21 +430,19 @@ public class ULA {
 	}
 
 	public void stl(String r1) { // m..m+2 <-- (L)
-
-
-
+		T.setRegistrador(r1, Integer.parseInt(L.getConteudo()));
 	}
 
 	public void sts() { // m..m+2 <-- (S)
-
+		T.setRegistrador(r1, Integer.parseInt(S.getConteudo()));
 	}
 
 	public void stt() { // m..m+2 <-- (T)
-
+		T.setRegistrador(r1, T.getValorDoRegistrador(r1));
 	}
 
 	public void stx() { // m..m+2 <-- (X)
-
+		T.setRegistrador(r1, Integer.parseInt(X.getConteudo()));
 	}
 
 	public void sub(String r1) { // A <-- (A) - (m..m+2)
@@ -455,7 +463,9 @@ public class ULA {
 	}
 
 	public void tixr() { // X <-- (X) + 1; (X) : (r1)
-		ContadorInstrucoes.setContador(X.getConteudo() + 1);
+		//ContadorInstrucoes.setContador(X.getConteudo() + 1);
+		X.setConteudo(X.getConteudo() + 1);
+        	compr(X.getConteudo(), r1);
 	}
 
 	public void write(String r1) {
