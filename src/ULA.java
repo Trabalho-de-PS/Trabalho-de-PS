@@ -26,7 +26,7 @@ public class ULA {
 		this.SW = new Registrador();
 
 
-		Ferramentas.abrirArquivoEm(binInstructions, "C:\\Users\\LT\\Documents\\instrucoes.txt");
+		Ferramentas.abrirArquivoEm(binInstructions, "C:\\Users\\A\\Documents\\instrucoes.txt");
 		binInstructions = Ferramentas.traduzirOp(binInstructions);
 
 		T.setRegistrador("0", 10);
@@ -227,26 +227,26 @@ public class ULA {
 
 			case "00010100":
 				binCode = Ferramentas.format34(code, ContadorInstrucoes.getContador());
-                		r1 = binCode.get(0);
-                		stl(r1);
+                r1 = binCode.get(0);
+                stl(r1);
 				break;
 
 			case "01111100":
 				binCode = Ferramentas.format34(code, ContadorInstrucoes.getContador());
-                		r1 = binCode.get(0);
-                		sts(r1);
+                r1 = binCode.get(0);
+                sts(r1);
 				break;
 
 			case "10000100":
 				binCode = Ferramentas.format34(code, ContadorInstrucoes.getContador());
-                		r1 = binCode.get(0);
-                		stt(r1);
+                r1 = binCode.get(0);
+                stt(r1);
 				break;
 
 			case "00010000":
 				binCode = Ferramentas.format34(code, ContadorInstrucoes.getContador());
-                		r1 = binCode.get(0);
-                		stx(r1);
+                r1 = binCode.get(0);
+                stx(r1);
 				break;
 
 			case "00011100":
@@ -264,14 +264,14 @@ public class ULA {
 
 			case "00101100":
 				binCode = Ferramentas.format34(code, ContadorInstrucoes.getContador());
-                		r1 = binCode.get(0);
-                		tix(r1);
+                r1 = binCode.get(0);
+                tix(r1);
 				break;
 
 			case "10111000":
 				binCode = Ferramentas.format34(code, ContadorInstrucoes.getContador());
-                		r1 = binCode.get(0);
-                		tixr(r1);
+                r1 = binCode.get(0);
+                tixr(r1);
 				break;
 
 			case "11111111":
@@ -362,12 +362,12 @@ public class ULA {
 		B.setConteudo(Integer.parseInt(r1));
 	}
 
-	public void ldch(String r1) { // A [byte mais a direita] <-- (m)
-                A.setConteudo(A.getConteudo()&0xFF);
+	public void ldch() { // A [byte mais a direita] <-- (m)
+		A.setConteudo(A.getConteudo()&0xFF);
 	}
 
 	public void ldl(String r1) { // L <-- (m..m+2)
-		L.setConteudo(r1);
+		L.setConteudo(Integer.parseInt(r1));
 	}
 
 	public void lds(String r1) { // S <-- (m..m+2)
@@ -375,7 +375,7 @@ public class ULA {
 	}
 
 	public void ldt(String r1) { // T <-- (m..m+2)
-		//T.setRegistrador(Integer.parseInt(r1));
+		//T.setConteudo(Integer.parseInt(r1));
 	}
 
 	public void ldx(String r1) { // X <-- (m..m+2)
@@ -430,19 +430,19 @@ public class ULA {
 	}
 
 	public void stl(String r1) { // m..m+2 <-- (L)
-		T.setRegistrador(r1, Integer.parseInt(L.getConteudo()));
+		T.setRegistrador(r1, L.getConteudo());
 	}
 
-	public void sts() { // m..m+2 <-- (S)
-		T.setRegistrador(r1, Integer.parseInt(S.getConteudo()));
+	public void sts(String r1) { // m..m+2 <-- (S)
+		T.setRegistrador(r1, S.getConteudo());
 	}
 
-	public void stt() { // m..m+2 <-- (T)
+	public void stt(String r1) { // m..m+2 <-- (T)
 		T.setRegistrador(r1, T.getValorDoRegistrador(r1));
 	}
 
-	public void stx() { // m..m+2 <-- (X)
-		T.setRegistrador(r1, Integer.parseInt(X.getConteudo()));
+	public void stx(String r1) { // m..m+2 <-- (X)
+		T.setRegistrador(r1, X.getConteudo());
 	}
 
 	public void sub(String r1) { // A <-- (A) - (m..m+2)
@@ -457,15 +457,14 @@ public class ULA {
 		T.setRegistrador(r2, subtracao);
 	}
 
-	public void tix() { // X <-- (X) + 1; (X) : (m..m+2)
+	public void tix(String r1) { // X <-- (X) + 1; (X) : (m..m+2)
 		ContadorInstrucoes.setContador(X.getConteudo() + 1);
-        // funcao compara?
+		comp(r1);
 	}
 
-	public void tixr() { // X <-- (X) + 1; (X) : (r1)
-		//ContadorInstrucoes.setContador(X.getConteudo() + 1);
+	public void tixr(String r1) { // X <-- (X) + 1; (X) : (r1)
 		X.setConteudo(X.getConteudo() + 1);
-        	compr(X.getConteudo(), r1);
+        compr(Integer.toString(X.getConteudo()), r1);
 	}
 
 	public void write(String r1) {

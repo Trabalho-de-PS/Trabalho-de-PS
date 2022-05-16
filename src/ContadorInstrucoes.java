@@ -12,11 +12,11 @@ public class ContadorInstrucoes {
 		contador++;
 	}
 	
-	public static int getContator() {
+	public static int getContador() {
 		return contador;
 	}
 	
 	public static void setContador(int valor) {
-        	contador = valor;
-    	}
+		contador = valor;
+    }
 }

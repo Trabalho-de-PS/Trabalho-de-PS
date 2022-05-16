@@ -2,13 +2,13 @@ package ps;
 
 public class Registrador {
 
-  private String conteudo;
+  private int conteudo;
 
-  public String getConteudo() {
+  public int getConteudo() {
     return conteudo;
   }
 
-  public void setConteudo(String conteudo) {
+  public void setConteudo(int conteudo) {
     this.conteudo = conteudo;
   }
 }
