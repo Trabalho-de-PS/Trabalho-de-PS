@@ -1,5 +1,6 @@
 package ps;
 
+import java.io.IOException;
 import java.util.ArrayList;
 
 public class Processador {
@@ -7,8 +8,9 @@ public class Processador {
 	private ArrayList<String> opcode;
 	private Memoria memoria;
 	private ULA ula;
+	private ProcessadorMacro processadorMacro;
 	
-	public Processador() {
+	public Processador() throws IOException {
 		ContadorInstrucoes.reset();
 		
 		this.opcode = new ArrayList<String>();
@@ -19,11 +21,11 @@ public class Processador {
 		
 		for (String i : this.opcode) {
 			ula.stepCode(i, memoria.getHexCode());
-
-			
-			
 			ContadorInstrucoes.update();
 		}
+		
 		ula.getRegistradorGeral();
+		
+		processadorMacro.executa("arquivos/testeMacro.asm");
 	}	
 }

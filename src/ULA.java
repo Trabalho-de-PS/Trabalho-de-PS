@@ -26,7 +26,7 @@ public class ULA {
 		this.SW = new Registrador();
 
 
-		Ferramentas.abrirArquivoEm(binInstructions, "C:\\Users\\A\\Documents\\instrucoes.txt");
+		Ferramentas.abrirArquivoEm(binInstructions, "arquivos/instrucoes.txt");
 		binInstructions = Ferramentas.traduzirOp(binInstructions);
 
 		T.setRegistrador("0", 10);
