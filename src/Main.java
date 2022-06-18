@@ -1,14 +1,30 @@
 package ps;
 
+import java.io.IOException;
+import java.util.ArrayList;
+
 public class Main {
-	public static void main(String args[]) {
+	public static void main(String args[]) throws IOException {
 			
-		Processador pr = new Processador();
+		ArrayList<String> opcode;
+		Memoria memoria;
+		ULA ula;
 		
-//		Memoria memoria = new Memoria();
-//		ULA ula = new ULA();
-//		
-//		System.out.println(memoria.getCode());
-//		System.out.println(ula.getInstructions());
+		ContadorInstrucoes.reset();
+		
+		opcode = new ArrayList<String>();
+		memoria = new Memoria();
+		ula = new ULA(memoria);
+		
+		opcode = memoria.getCode();
+		
+		for (String i : opcode) {
+			ula.stepCode(i, memoria.getHexCode());
+			ContadorInstrucoes.update();
+		}
+		
+		memoria.getMemoriaTotal();
+		
+		ProcessadorMacro.executa("arquivos/testeMacro.asm");
 	}
 }

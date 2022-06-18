@@ -11,10 +11,11 @@ public class ULA {
 	private Registrador L;
 	private Registrador B;
 	private Registrador S;
-	private RegistradorGeral T;
+	private Registrador T;
 	private Registrador SW;
+	private Memoria memoria;
 
-	public ULA() {
+	public ULA(Memoria memoria) {
 		this.binCode = new ArrayList<String>();
 		this.binInstructions = new ArrayList<String>();
 		this.A = new Registrador();
@@ -22,19 +23,15 @@ public class ULA {
 		this.L = new Registrador();
 		this.B = new Registrador();
 		this.S = new Registrador();
-		this.T = new RegistradorGeral();
+		this.T = new Registrador();
 		this.SW = new Registrador();
-
+		this.memoria = memoria;
 
 		Ferramentas.abrirArquivoEm(binInstructions, "arquivos/instrucoes.txt");
 		binInstructions = Ferramentas.traduzirOp(binInstructions);
 
-		T.setRegistrador("0", 10);
-		T.setRegistrador("1", 10);
-	}
-
-	public void getRegistradorGeral() {
-		T.getRegistradorTotal();
+		memoria.setMemoria("0", 10);
+		memoria.setMemoria("1", 10);
 	}
 
 	public void stepCode(String key, ArrayList<String> code) {
@@ -294,9 +291,9 @@ public class ULA {
 
 	public void addr(String r1, String r2) { // r2 <-- (r2) + (r1)
 		int soma = 0;
-		soma += T.getValorDoRegistrador(r1);
-		soma += T.getValorDoRegistrador(r2);
-		T.setRegistrador(r2, soma);
+		soma += memoria.getMemoria(r1);
+		soma += memoria.getMemoria(r2);
+		memoria.setMemoria(r2, soma);
 	}
 
 	public void and(String r1) { // A <-- (A) & (m..m+2)
@@ -305,7 +302,7 @@ public class ULA {
 
 	public void clear(String r1) { // r1 <-- 0
 		int zero = 0;
-		T.setRegistrador(r1, zero);
+		memoria.setMemoria(r1, zero);
 	}
 
 	// 0 se forem iguais, -1 se o primeiro for maior, 1 se o segundo for maior
@@ -314,7 +311,7 @@ public class ULA {
 	}
 
 	public void compr(String r1, String r2) { // (r1) : (r2)
-		SW.setConteudo(Integer.compare(T.getValorDoRegistrador(r1), T.getValorDoRegistrador(r2)));
+		SW.setConteudo(Integer.compare(memoria.getMemoria(r1), memoria.getMemoria(r2)));
 	}
 
 	public void div(String r1) { // A : (A) / (m..m+2)
@@ -323,8 +320,8 @@ public class ULA {
 
 	public void divr(String r1, String r2) { // (r2) <-- (r2) / (r1)
 		int divisao = 0;
-		divisao = T.getValorDoRegistrador(r1) / T.getValorDoRegistrador(r2);
-		T.setRegistrador(r2, divisao);
+		divisao = memoria.getMemoria(r1) / memoria.getMemoria(r2);
+		memoria.setMemoria(r2, divisao);
 	}
 
 	public void j(String r1) { // PC <-- m
@@ -333,25 +330,25 @@ public class ULA {
 
 	public void jeq(String r1) { // PC <-- m if CC set to =
 		if (SW.getConteudo() == 00) {
-			ContadorInstrucoes.setContador(T.getValorDoRegistrador(r1));
+			ContadorInstrucoes.setContador(memoria.getMemoria(r1));
 		}
 	}
 
 	public void jgt(String r1) { // PC <-- m if CC set to >
 		if (SW.getConteudo() == 01) {
-			ContadorInstrucoes.setContador(T.getValorDoRegistrador(r1));
+			ContadorInstrucoes.setContador(memoria.getMemoria(r1));
 		}
 	}
 
 	public void jlt(String r1) { // PC <-- m if CC set to <
 		if (SW.getConteudo() == 11) {
-			ContadorInstrucoes.setContador(T.getValorDoRegistrador(r1));
+			ContadorInstrucoes.setContador(memoria.getMemoria(r1));
 		}
 	}
 
 	public void jsub(String r1) { // L <-- (PC); PC <-- m
 		L.setConteudo(ContadorInstrucoes.getContador());
-		ContadorInstrucoes.setContador(T.getValorDoRegistrador(r1));
+		ContadorInstrucoes.setContador(memoria.getMemoria(r1));
 	}
 
 	public void lda(String r1) { // A <-- (m..m+2)
@@ -375,7 +372,7 @@ public class ULA {
 	}
 
 	public void ldt(String r1) { // T <-- (m..m+2)
-		//T.setConteudo(Integer.parseInt(r1));
+		T.setConteudo(memoria.getMemoria(r1));
 	}
 
 	public void ldx(String r1) { // X <-- (m..m+2)
@@ -390,8 +387,8 @@ public class ULA {
 
 	public void mulr(String r1, String r2) { // r2 <-- (r2) * (r1)
 		int multiplicacao = 0;
-		multiplicacao = T.getValorDoRegistrador(r1) * T.getValorDoRegistrador(r2);
-		T.setRegistrador(r2, multiplicacao);
+		multiplicacao = memoria.getMemoria(r1) * memoria.getMemoria(r2);
+		memoria.setMemoria(r2, multiplicacao);
 	}
 
 	public void or(String r1) { // A <-- (A) | (m..m+2)
@@ -399,50 +396,50 @@ public class ULA {
 	}
 
 	public void rmo(String r1, String r2) { // r2 <-- (r1)
-		T.setRegistrador(r2, T.getValorDoRegistrador(r1));
+		memoria.setMemoria(r2, memoria.getMemoria(r1));
 	}
 
 	public void rsub(String r1) { // PC <-- (L)
 		L.setConteudo(Integer.parseInt(r1));
-		ContadorInstrucoes.setContador(T.getValorDoRegistrador(r1));
+		ContadorInstrucoes.setContador(memoria.getMemoria(r1));
 	}
 
 	public void shiftl(String r1, String r2) { // r1 <-- (r1)
-		int deslocamento = T.getValorDoRegistrador(r2);
-		T.setRegistrador(r1, T.getValorDoRegistrador(r1) << deslocamento);
+		int deslocamento = memoria.getMemoria(r2);
+		memoria.setMemoria(r1, memoria.getMemoria(r1) << deslocamento);
 	}
 
 	public void shiftr(String r1, String r2) { // r1 <-- (r1)
-		int deslocamento = T.getValorDoRegistrador(r2);
-		T.setRegistrador(r1, T.getValorDoRegistrador(r1) >> deslocamento);
+		int deslocamento = memoria.getMemoria(r2);
+		memoria.setMemoria(r1, memoria.getMemoria(r1) >> deslocamento);
 	}
 
 	public void sta(String r1) { // m..m+2 <-- (A)
-		T.setRegistrador(r1, A.getConteudo());
+		memoria.setMemoria(r1, A.getConteudo());
 	}
 
 	public void stb(String r1) { // m..m+2 <-- (B)
-		T.setRegistrador(r1, B.getConteudo());
+		memoria.setMemoria(r1, B.getConteudo());
 	}
 
 	public void stch(String r1) { // m <-- (A)
-		T.setRegistrador(r1, A.getConteudo());
+		memoria.setMemoria(r1, A.getConteudo());
 	}
 
 	public void stl(String r1) { // m..m+2 <-- (L)
-		T.setRegistrador(r1, L.getConteudo());
+		memoria.setMemoria(r1, L.getConteudo());
 	}
 
 	public void sts(String r1) { // m..m+2 <-- (S)
-		T.setRegistrador(r1, S.getConteudo());
+		memoria.setMemoria(r1, S.getConteudo());
 	}
 
 	public void stt(String r1) { // m..m+2 <-- (T)
-		T.setRegistrador(r1, T.getValorDoRegistrador(r1));
+		memoria.setMemoria(r1, T.getConteudo());
 	}
 
 	public void stx(String r1) { // m..m+2 <-- (X)
-		T.setRegistrador(r1, X.getConteudo());
+		memoria.setMemoria(r1, X.getConteudo());
 	}
 
 	public void sub(String r1) { // A <-- (A) - (m..m+2)
@@ -453,8 +450,8 @@ public class ULA {
 
 	public void subr(String r1, String r2) { // r2 <-- (r2) - (r1)
 		int subtracao = 0;
-		subtracao = T.getValorDoRegistrador(r2) - T.getValorDoRegistrador(r1);
-		T.setRegistrador(r2, subtracao);
+		subtracao = memoria.getMemoria(r2) - memoria.getMemoria(r1);
+		memoria.setMemoria(r2, subtracao);
 	}
 
 	public void tix(String r1) { // X <-- (X) + 1; (X) : (m..m+2)
@@ -468,6 +465,6 @@ public class ULA {
 	}
 
 	public void write(String r1) {
-		A.setConteudo(T.getValorDoRegistrador(r1));
+		A.setConteudo(memoria.getMemoria(r1));
 	}
 }
