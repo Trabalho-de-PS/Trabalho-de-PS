@@ -11,6 +11,7 @@ public class ProcessadorMacro {
 	
 	public static File executa(String path) throws IOException {
 		List<String> codigo = new ArrayList<>();
+		List<String> aux2 = new ArrayList<>();
 		List<Macro> listaMacros = new ArrayList<>();
 		List<Macro> listaChamadas = new ArrayList<>();
 		String[] aux;
@@ -55,22 +56,26 @@ public class ProcessadorMacro {
 						}
 						j++;
 					}
-					// remove da definicao as parametros sem #
+					
+					// remove da definicao os parametros sem #
 					for(j = 0; j < macro.getDefinicao().size(); j++) {
 						if(macro.getDefinicao().get(j).contains("#") == false) {
 							macro.getDefinicao().remove(j);
 						}
 					}
 					listaMacros.add(macro);
-					
-					// remove a definicao da macro do codigo
-					j = 0;
-					while(codigo.get(0).compareTo("MEND") != 0) {
-						codigo.remove(0);
-						j++;
-					}
-					codigo.remove(0); // remove o MEND
 				}
+			}
+			
+			// remove as definicoes das macros do codigo
+			j = codigo.size()-1;
+			while(!codigo.get(j).equals("MEND")) {
+				aux2.add(0, codigo.get(j));
+				j--;
+			}
+			codigo.clear();
+			for(i = 0; i < aux2.size(); i++) {
+				codigo.add(aux2.get(i));
 			}
 			
 			// armazena a chamada das macros
