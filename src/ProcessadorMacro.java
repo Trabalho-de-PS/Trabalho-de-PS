@@ -45,24 +45,35 @@ public class ProcessadorMacro {
 					while(codigo.get(j).compareTo("MEND") != 0) {
 						aux = codigo.get(j).replace(",", "").split(" ");
 						macro.setDefinicao(codigo.get(j).replace(",", ""));
-						for(k = 0; k < macro.getParametros().size(); k++) {
-							if(macro.getParametros().get(k).contains(aux[1])) {
-								for(l = 0; l < macro.getDefinicao().size(); l++) {
-									if(macro.getDefinicao().get(l).contains(" " + aux[1])) {
-										macro.setDefinicao(macro.getDefinicao().get(l).replace(" " + aux[1], " #" + (k+1)));
+						for(k = 1; k < aux.length; k++) {
+							for(l = 0; l < macro.getParametros().size(); l++) {
+								if(macro.getParametros().get(l).contains(aux[k])) {
+									for(m = 0; m < macro.getDefinicao().size(); m++) {
+										if(macro.getDefinicao().get(m).contains(" " + aux[k])) {
+											macro.setDefinicao(macro.getDefinicao().get(m).replace(" " + aux[k], " #" + (l+1)));
+										}
 									}
 								}
 							}
+							j++;
 						}
-						j++;
 					}
 					
 					// remove da definicao os parametros sem #
 					for(j = 0; j < macro.getDefinicao().size(); j++) {
-						if(macro.getDefinicao().get(j).contains("#") == false) {
-							macro.getDefinicao().remove(j);
+						if(macro.getDefinicao().get(j).matches(".*#\\d+ #\\d+")) {
+							aux2.add(macro.getDefinicao().get(j));
+						}
+						else if(macro.getDefinicao().get(j).matches(".*[A-Z]+[A-Z]+ #\\d+")) {
+							aux2.add(macro.getDefinicao().get(j));
 						}
 					}
+					macro.getDefinicao().clear();
+					for(j = 0; j < aux2.size(); j++) {
+						macro.setDefinicao(aux2.get(j));
+					}
+					aux2.clear();
+					
 					listaMacros.add(macro);
 				}
 			}
@@ -77,6 +88,8 @@ public class ProcessadorMacro {
 			for(i = 0; i < aux2.size(); i++) {
 				codigo.add(aux2.get(i));
 			}
+			aux2.clear();
+
 			
 			// armazena a chamada das macros
 			for(i = 0; i < codigo.size(); i++) {
@@ -100,7 +113,7 @@ public class ProcessadorMacro {
 					}
 				}
 			}
-			
+
 			// substitui os parametros da macro pelos argumentos da chamada e coloca no codigo
 			cont = 0;
 			for(j = 0; j < listaChamadas.size(); j++) {
@@ -113,7 +126,18 @@ public class ProcessadorMacro {
 						for(l = 0; l < listaChamadas.get(j).getArgumentos().size(); l++) {
 							for(m = 0; m < codigo.size(); m++) {
 								if(codigo.get(m).contains("#" + (l+1))) {
-									codigo.set(m, codigo.get(m).replace("#" + (l+1), listaChamadas.get(j).getArgumentos().get(l)));
+									aux = codigo.get(m).replace(",", "").split(" ");
+									if(aux.length > 2) {
+										if(l == listaChamadas.get(j).getArgumentos().size()-1) {
+											codigo.set(m, codigo.get(m).replace("#" + (l+1), listaChamadas.get(j).getArgumentos().get(l)));
+										}
+										else {
+											codigo.set(m, codigo.get(m).replace("#" + (l+1), listaChamadas.get(j).getArgumentos().get(l) + ","));
+										}
+									}
+									else {
+										codigo.set(m, codigo.get(m).replace("#" + (l+1), listaChamadas.get(j).getArgumentos().get(l)));
+									}
 								}
 							}
 						}

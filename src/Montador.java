@@ -32,6 +32,11 @@ public class Montador {
 			
 			// ####### Primeiro Passo #######
 			
+			// retira todas as virgulas do codigo
+			for(i = 0; i < codigo.size(); i++) {
+				codigo.set(i, codigo.get(i).replace(",", ""));
+			}
+			
 			// determinando os enderecos iniciais do codigo
 			endereco.add(cont);
 			for(i = 0; i < codigo.size(); i++) {
