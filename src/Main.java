@@ -25,6 +25,8 @@ public class Main {
 		
 		memoria.getMemoriaTotal();
 		
-		ProcessadorMacro.executa("arquivos/testeMacro.asm");
+		ProcessadorMacro.executa("arquivos/codigo.asm");
+		
+		Montador.executa("arquivos/saidaMacro.asm");
 	}
 }

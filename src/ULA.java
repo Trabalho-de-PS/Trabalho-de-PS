@@ -27,7 +27,7 @@ public class ULA {
 		this.SW = new Registrador();
 		this.memoria = memoria;
 
-		Ferramentas.abrirArquivoEm(binInstructions, "arquivos/instrucoes.txt");
+		Ferramentas.abrirArquivoEm(binInstructions, "arquivos/opcodes.txt");
 		binInstructions = Ferramentas.traduzirOp(binInstructions);
 
 		memoria.setMemoria("0", 10);
@@ -270,12 +270,6 @@ public class ULA {
                 r1 = binCode.get(0);
                 tixr(r1);
 				break;
-
-			case "11111111":
-				binCode = Ferramentas.format34(code, ContadorInstrucoes.getContador());
-				r1 = binCode.get(0);
-				write(r1);
-				break;
 		}
 	}
 
@@ -462,9 +456,5 @@ public class ULA {
 	public void tixr(String r1) { // X <-- (X) + 1; (X) : (r1)
 		X.setConteudo(X.getConteudo() + 1);
         compr(Integer.toString(X.getConteudo()), r1);
-	}
-
-	public void write(String r1) {
-		A.setConteudo(memoria.getMemoria(r1));
 	}
 }

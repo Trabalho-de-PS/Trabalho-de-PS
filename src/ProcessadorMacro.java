@@ -15,7 +15,7 @@ public class ProcessadorMacro {
 		List<Macro> listaChamadas = new ArrayList<>();
 		String[] aux;
 		int i, j, k, l, m, cont;
-		FileWriter saida = new FileWriter("arquivos/testeMacroSaida.asm");
+		FileWriter saida = new FileWriter("arquivos/saidaMacro.asm");
 		
 		try {
 			// leitura do arquivo
@@ -23,8 +23,6 @@ public class ProcessadorMacro {
 			while (sc.hasNextLine()) {
 				codigo.add(sc.nextLine());
             }
-			
-			//System.out.print("\nCodigo: "); System.out.println(codigo);
 			
 			// percorre o codigo armazenando as macros
 			for(i = 0; i < codigo.size(); i++) {
@@ -34,14 +32,12 @@ public class ProcessadorMacro {
 					// atribui o nome da macro no codigo para o objeto macro
 					aux = codigo.get(i).split(" "); 
 					macro.setNome(aux[0]);
-					//System.out.print("Nome: "); System.out.println(macro.getNome());
 					
 					// coloca os parametros no objeto macro
 					aux = codigo.get(i).replace(",", "").split(" ");
 					for(j = 2; j < aux.length; j++) {
 						macro.setParametros(aux[j]);
 					}
-					//System.out.print("Parametros: "); System.out.println(macro.getParametros());
 					
 					// coloca a definicao no objeto macro
 					j = i + 1;
@@ -66,7 +62,6 @@ public class ProcessadorMacro {
 						}
 					}
 					listaMacros.add(macro);
-					//System.out.print("Definicao: "); System.out.println(macro.getDefinicao());
 					
 					// remove a definicao da macro do codigo
 					j = 0;
@@ -120,8 +115,6 @@ public class ProcessadorMacro {
 					}
 				}
 			}
-			
-			//System.out.print("Codigo Final: "); System.out.println(codigo);
 			
 			// escreve o codigo final no arquivo de saida
             for(i = 0; i < codigo.size(); i++) {
