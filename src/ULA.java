@@ -37,7 +37,7 @@ public class ULA {
 
 	public void adressing(String r1, String key) {
 		switch (key) {
-		//Endereçamento Direto
+		//Enderecamento Direto
 			case "110010":
 				address = ContadorInstrucoes.getContador() + (address + 1);
 				break;
@@ -51,7 +51,7 @@ public class ULA {
 				address = X.getConteudo() + address;
 				break;
 			case "111010":
-				address = X.getConteudo() + ContadorInstrucoes.getContador()
+				address = X.getConteudo() + ContadorInstrucoes.getContador();
 				break;
 			case "111100":
 				address = X.getConteudo() + B.getConteudo();
@@ -72,9 +72,8 @@ public class ULA {
 			case "100100":
 				address = Integer.parseInt(r1);
 				break;
+		}
  	}
-
-
 
 	public void stepCode(String key, ArrayList<String> code) {
 		String r1, r2;

@@ -104,11 +104,26 @@ public class Montador {
 			// escreve o codigo final no arquivo de saida
             for(i = 0; i < codigo.size(); i++) {
             	if(i != codigo.size()-1) {
-            		saida.write(endereco.get(i) + " ");
+            		aux = codigo.get(i).replace(",", "").split(" ");
+            		if(aux[0].equals("00")) {
+            			codigo.set(i, codigo.get(i).replace(" ", ""));
+            			codigo.set(i, codigo.get(i).replace(codigo.get(i), codigo.get(i) + "00"));
+            		}
+            		else if((endereco.get(i+1)-endereco.get(i)) == 3) {
+            			codigo.set(i, codigo.get(i).replace(" ", "0"));
+            		}
+            		else if((endereco.get(i+1)-endereco.get(i)) == 2) {
+            			codigo.set(i, codigo.get(i).replace(" ", "0"));
+            			codigo.set(i, codigo.get(i).replace(codigo.get(i), codigo.get(i) + "00"));
+            		}
             		saida.write(codigo.get(i) + "\n");
             	}
             	else {
-            		saida.write(endereco.get(i) + " ");
+            		aux = codigo.get(i).replace(",", "").split(" ");
+            		if(aux[0].equals("00")) {
+        				codigo.set(i, codigo.get(i).replace(" ", ""));
+        				codigo.set(i, codigo.get(i).replace(codigo.get(i), codigo.get(i) + "00"));
+        			}
             		saida.write(codigo.get(i));
             	}
             }
