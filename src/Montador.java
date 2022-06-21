@@ -9,7 +9,7 @@ import java.util.HashMap;
 import java.util.Scanner;
 
 public class Montador {
-	public static File executa(String path) throws IOException {
+	public static List<Integer> executa(String path) throws IOException {
 		List<String> codigo = new ArrayList<>();
 		List<Integer> endereco = new ArrayList<>();
 		ArrayList<String> instrucoes = new ArrayList<>();
@@ -135,6 +135,6 @@ public class Montador {
 			System.exit(1);
 		}
 		
-		return null;
+		return endereco;
 	}
 }

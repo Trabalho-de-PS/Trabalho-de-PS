@@ -12,7 +12,7 @@ public class Memoria {
 		this.memoria = new String[1024];
 		this.binCodeOp = new ArrayList<String>();
 		
-		Ferramentas.abrirArquivoEm(binCodeOp, "arquivos/teste.txt");
+		Ferramentas.abrirArquivoEm(binCodeOp, "arquivos/saidaMontador.asm");
 		hexCodeOriginal = binCodeOp;
 		binCodeOp = Ferramentas.traduzirOp(binCodeOp);
 	}

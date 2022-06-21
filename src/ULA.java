@@ -30,9 +30,6 @@ public class ULA {
 
 		Ferramentas.abrirArquivoEm(binInstructions, "arquivos/opcodes.txt");
 		binInstructions = Ferramentas.traduzirOp(binInstructions);
-
-		memoria.setMemoria("0", 10);
-		memoria.setMemoria("1", 10);
 	}
 
 	public void adressing(String r1, String key) {
