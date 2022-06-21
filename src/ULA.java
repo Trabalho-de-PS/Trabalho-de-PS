@@ -14,6 +14,7 @@ public class ULA {
 	private Registrador T;
 	private Registrador SW;
 	private Memoria memoria;
+	private int address;
 
 	public ULA(Memoria memoria) {
 		this.binCode = new ArrayList<String>();
@@ -33,6 +34,47 @@ public class ULA {
 		memoria.setMemoria("0", 10);
 		memoria.setMemoria("1", 10);
 	}
+
+	public void adressing(String r1, String key) {
+		switch (key) {
+		//Endereçamento Direto
+			case "110010":
+				address = ContadorInstrucoes.getContador() + (address + 1);
+				break;
+			case "110100":
+				address = B.getConteudo() + address;
+				break;
+			case "111000":
+				address = X.getConteudo() + address;
+				break;
+			case "111001":
+				address = X.getConteudo() + address;
+				break;
+			case "111010":
+				address = X.getConteudo() + ContadorInstrucoes.getContador()
+				break;
+			case "111100":
+				address = X.getConteudo() + B.getConteudo();
+				break;
+			case "001000":
+				address = X.getConteudo() + address;
+				break;
+		//Enderecamento indireto
+			case "100000":
+				address = Integer.parseInt(r1);
+				break;
+			case "100001":
+				address = Integer.parseInt(r1);
+				break;
+			case "100010":
+				address = Integer.parseInt(r1);
+				break;
+			case "100100":
+				address = Integer.parseInt(r1);
+				break;
+ 	}
+
+
 
 	public void stepCode(String key, ArrayList<String> code) {
 		String r1, r2;
