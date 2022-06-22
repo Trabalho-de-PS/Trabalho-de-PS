@@ -15,8 +15,15 @@ public class Memoria {
 		Ferramentas.abrirArquivoEm(binCodeOp, "arquivos/saidaMontador.asm");
 		hexCodeOriginal = binCodeOp;
 		binCodeOp = Ferramentas.traduzirOp(binCodeOp);
+                this.resetMemoria();
 	}
-		
+	
+        public void resetMemoria(){
+            for(int i = 0 ; i < memoria.length ; i++){
+                setMemoria(Integer.toString(i), 0);
+                }
+        }
+        
 	public ArrayList<String> getCode() {
 		return binCodeOp;
 	}

@@ -1,6 +1,8 @@
 package ps;
 
-public class ContadorInstrucoes {
+import static java.lang.Thread.sleep;
+
+public class ContadorInstrucoes extends GUI {
 
 	private static int contador;
 	
@@ -8,8 +10,9 @@ public class ContadorInstrucoes {
 		contador = 0;
 	}
 	
-	public static void update() {
-		contador++;
+	public static void update() throws InterruptedException {
+            //sleep(slider.getValue());
+            contador++;
 	}
 	
 	public static int getContador() {

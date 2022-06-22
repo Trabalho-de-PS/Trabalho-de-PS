@@ -6,15 +6,15 @@ public class ULA {
 
 	private ArrayList<String> binCode;
 	private ArrayList<String> binInstructions;
-	private Registrador A;
-	private Registrador X;
-	private Registrador L;
-	private Registrador B;
-	private Registrador S;
-	private Registrador T;
-	private Registrador SW;
-	private Memoria memoria;
-	private int address;
+	public static Registrador A;
+	public static Registrador X;
+	public static Registrador L;
+	public static Registrador B;
+	public static Registrador S;
+	public static Registrador T;
+	public static Registrador SW;
+	public static Memoria memoria;
+	public static int address;
 
 	public ULA(Memoria memoria) {
 		this.binCode = new ArrayList<String>();
